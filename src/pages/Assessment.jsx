@@ -1,6 +1,11 @@
-// Home.jsx
+import React from 'react';
+
 function Assessment() {
-  return <h1>Assessment</h1>;
+  return (
+    <div>
+      <h1>Self-Assessment</h1>
+    </div>
+  );
 }
 
 export default Assessment;
