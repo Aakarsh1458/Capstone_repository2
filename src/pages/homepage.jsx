@@ -3,22 +3,23 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 function Home(){
+  const pages = [
+  { name: 'Assessment', path: '/Assessment', desc: 'Go to the Assessment page' },
+  { name: 'Community', path: '/community', desc: 'Join the Community page' },
+  { name: 'Contact', path: '/contact', desc: 'Reach out via Contact page' },
+  { name: 'Resources', path: '/Resources', desc: 'Access the Resources page' },
+  { name: 'Tips', path: '/tips', desc: 'Read helpful Tips for wellness' },
+  { name: 'Login', path: '/login', desc: 'Access your account' },
+  { name: 'Register', path: '/register', desc: 'Create a new account' },
+  { name: 'Blogs', path: '/blogs', desc: 'Explore mental health blogs' },
+  { name: 'FAQs', path: '/faqs', desc: 'Commonly asked questions' },
+  { name: 'About', path: '/about', desc: 'Learn more about us' }, // ✅ Added this line
+];
+
+
 
     // Dynamically import all files in the pages folder (except homepage.jsx)
-    const pageFiles = require.context('./', false, /\.jsx$/);
-    const pages = pageFiles
-        .keys()
-        .filter((file) => file !== './homepage.jsx')
-        .map((file) => {
-            const name = file.replace('./', '').replace('.jsx', '');
-            // Capitalize first letter
-            const displayName = name.charAt(0).toUpperCase() + name.slice(1);
-            return {
-                name: displayName,
-                path: `/${name}`,
-                desc: `Go to the ${displayName} page`,
-            };
-        });
+   
 
     return (
         <div
