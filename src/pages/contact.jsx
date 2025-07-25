@@ -10,91 +10,147 @@ function Contact() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Simulate submission (could use localStorage or just show a message)
     setSubmitted(true);
     // Optionally: localStorage.setItem('contactMessage', JSON.stringify(form));
   };
 
-  if (submitted) {
-    return (
-      <div className="contact-container">
-        <h1>Contact Us</h1>
-        <p>Thank you for reaching out! We have received your message.</p>
-      </div>
-    );
-  }
-
   return (
-    <div className="contact-container">
+    <div className="contact-main contact-main-centered">
       <h1>Contact Us</h1>
-      <form onSubmit={handleSubmit} className="contact-form">
-        <label>
-          Name:
-          <input
-            type="text"
-            name="name"
-            value={form.name}
-            onChange={handleChange}
-            required
-          />
-        </label>
-        <label>
-          Email:
-          <input
-            type="email"
-            name="email"
-            value={form.email}
-            onChange={handleChange}
-            required
-          />
-        </label>
-        <label>
-          Message:
-          <textarea
-            name="message"
-            value={form.message}
-            onChange={handleChange}
-            required
-          />
-        </label>
-        <button type="submit">Send Message</button>
-      </form>
+      {submitted ? (
+        <div className="success-box">
+          <h2>Thank you!</h2>
+          <p>Your message has been received.</p>
+        </div>
+      ) : (
+        <form onSubmit={handleSubmit} className="contact-form-db">
+          <div className="form-row">
+            <label htmlFor="name">Name <span className="db-type">(varchar)</span></label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={form.name}
+              onChange={handleChange}
+              required
+              placeholder="Enter your name"
+            />
+          </div>
+          <div className="form-row">
+            <label htmlFor="email">Email <span className="db-type">(varchar)</span></label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={form.email}
+              onChange={handleChange}
+              required
+              placeholder="Enter your email"
+            />
+          </div>
+          <div className="form-row">
+            <label htmlFor="message">Message <span className="db-type">(text)</span></label>
+            <textarea
+              id="message"
+              name="message"
+              value={form.message}
+              onChange={handleChange}
+              required
+              placeholder="Type your message here..."
+            />
+          </div>
+          <button type="submit">Send Message</button>
+        </form>
+      )}
       <style>{`
-        .contact-container {
-          max-width: 400px;
-          margin: 2rem auto;
-          padding: 2rem;
-          border-radius: 10px;
-          background: #f9f9f9;
-          box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        .contact-main.contact-main-centered {
+          max-width: 480px;
+          margin: 3rem auto 0 auto;
+          background: #fff;
+          border-radius: 12px;
+          box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+          padding: 2.5rem 2.5rem 2rem 2.5rem;
+          border: 1px solid #e3e8ee;
         }
-        .contact-form {
+        .contact-main h1 {
+          margin-bottom: 1.7rem;
+          color: #2563eb;
+          font-size: 2rem;
+          font-weight: 700;
+          text-align: center;
+          letter-spacing: 0.5px;
+        }
+        .contact-form-db {
           display: flex;
           flex-direction: column;
-          gap: 1rem;
+          gap: 1.3rem;
         }
-        .contact-form label {
+        .form-row {
           display: flex;
           flex-direction: column;
-          font-weight: 500;
         }
-        .contact-form input, .contact-form textarea {
-          margin-top: 0.5rem;
-          padding: 0.5rem;
-          border: 1px solid #ccc;
-          border-radius: 5px;
+        .form-row label {
+          font-weight: 600;
+          margin-bottom: 0.4rem;
+          color: #22223b;
+          font-size: 1.05rem;
         }
-        .contact-form button {
-          padding: 0.75rem;
-          background: #4f8cff;
+        .db-type {
+          font-size: 0.85em;
+          color: #6b7280;
+          margin-left: 0.5em;
+        }
+        .contact-form-db input, .contact-form-db textarea {
+          padding: 0.65rem;
+          border: 1px solid #bfc9d9;
+          border-radius: 6px;
+          font-size: 1rem;
+          background: #f8fafc;
+          transition: border 0.2s;
+        }
+        .contact-form-db input:focus, .contact-form-db textarea:focus {
+          border: 1.5px solid #2563eb;
+          outline: none;
+        }
+        .contact-form-db textarea {
+          min-height: 90px;
+          resize: vertical;
+        }
+        .contact-form-db button {
+          align-self: flex-start;
+          padding: 0.7rem 1.7rem;
+          background: #2563eb;
           color: #fff;
           border: none;
-          border-radius: 5px;
-          font-size: 1rem;
+          border-radius: 6px;
+          font-size: 1.08rem;
+          font-weight: 600;
           cursor: pointer;
+          margin-top: 0.7rem;
+          box-shadow: 0 2px 8px rgba(37,99,235,0.08);
+          transition: background 0.2s, box-shadow 0.2s;
         }
-        .contact-form button:hover {
-          background: #2563eb;
+        .contact-form-db button:hover {
+          background: #1746a2;
+          box-shadow: 0 4px 16px rgba(37,99,235,0.13);
+        }
+        .success-box {
+          background: #e0f7e9;
+          border: 1px solid #34d399;
+          border-radius: 10px;
+          padding: 2.2rem 1.5rem;
+          text-align: center;
+          color: #065f46;
+          font-size: 1.15rem;
+          box-shadow: 0 2px 8px rgba(52,211,153,0.08);
+        }
+        @media (max-width: 600px) {
+          .contact-main.contact-main-centered {
+            padding: 1rem 0.5rem;
+          }
+          .contact-main h1 {
+            font-size: 1.1rem;
+          }
         }
       `}</style>
     </div>
