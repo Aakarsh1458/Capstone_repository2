@@ -8,6 +8,8 @@ import Contact from './pages/contact';
 import Community from './pages/community';
 import Assessment from './pages/Assessment';
 import Tips from './pages/Tips';
+import Register from './pages/register';
+import Login from './pages/login';
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/community" element={<Community />} />
         <Route path="/tips" element={<Tips />} />
+        <Route path="/register" element={<Register />}/>
+        <Route path="/login" element={<Login />}/>
       </Routes>
     </Router>
   );
