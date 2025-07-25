@@ -50,7 +50,7 @@ function Home(){
     const [servicesOpen, setServicesOpen] = React.useState(false);
 
     // Define a darker beige
-    const darkBeige = '#e0d3b8';
+    const darkBeige = '#bfa77a';
 
     return (
         <motion.div
@@ -142,7 +142,7 @@ function Home(){
                                                 justifyContent: 'flex-start', // Move nav to the left
                                                 flexWrap: 'wrap', // Allow nav items to wrap if needed
                                             }}>
-                                                {[...navPages, ...servicesNav, { name: 'Assessment', path: '/Assessment' }].map((item) => (
+                                                {[...navPages, ...servicesNav, { name: 'Contact', path: '/contact' }].map((item) => (
                                                     <motion.div
                                                         key={item.path}
                                                         whileHover={{ scale: 1.06, background: "#b7c7a322" }}
@@ -156,7 +156,7 @@ function Home(){
                                                         <Link
                                                             to={item.path}
                                                             style={{
-                                                                color: '#6b8a4c',
+                                                                color: '#222',
                                                                 textDecoration: 'none',
                                                                 fontWeight: 600,
                                                                 fontSize: '0.92rem',
@@ -182,7 +182,7 @@ function Home(){
                                                             <Link
                                                                 to={item.path}
                                                                 style={{
-                                                                    color: '#6b8a4c',
+                                                                    color: '#222',
                                                                     textDecoration: 'none',
                                                                     fontWeight: 700,
                                                                     fontSize: '0.92rem',
@@ -255,7 +255,7 @@ function Home(){
                         <span
                             style={{
                                 fontSize: '1.18rem',
-                                color: '#6b8a4c',
+                                color: '#222',
                                 fontWeight: 600,
                                 marginBottom: '0.7em',
                                 letterSpacing: '0.2px',
@@ -268,8 +268,8 @@ function Home(){
                                 whileHover={{ scale: 1.06, backgroundColor: '#6b8a4c', color: '#fff' }}
                                 whileTap={{ scale: 0.97 }}
                                 style={{
-                                    background: '#e7ecd9',
-                                    color: '#6b8a4c',
+                                    background: '#d9c9a3',
+                                    color: '#222',
                                     border: 'none',
                                     borderRadius: '8px',
                                     padding: '0.7em 1.5em',
@@ -314,7 +314,7 @@ function Home(){
                         transition={{ duration: 1, delay: 0.7 }}
                         style={{
                             fontSize: '1.25rem',
-                            color: '#6b8a4c',
+                            color: '#222',
                             marginBottom: '1.5em',
                             maxWidth: '480px',
                             textAlign: 'center',
@@ -331,13 +331,13 @@ function Home(){
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         transition={{ duration: 1.2, delay: 1.1, type: "spring", stiffness: 60 }}
                         style={{
-                            background: '#e7ecd9',
+                            background: '#d9c9a3',
                             borderRadius: '14px',
                             boxShadow: '0 2px 12px #b7c7a322',
                             padding: '1.1em 1.5em',
                             marginTop: '1.2em',
                             textAlign: 'center',
-                            color: '#6b8a4c',
+                            color: '#222',
                             fontWeight: 500,
                             fontSize: '1.08rem',
                             letterSpacing: '0.3px',
@@ -368,7 +368,7 @@ function Home(){
                 animate={{ opacity: 1 }}
                 transition={{ duration: 1, delay: 1.2 }}
                 style={{
-                    color: '#6b8a4c',
+                    color: '#222',
                     fontSize: '1rem',
                     marginTop: 'auto',
                     padding: '1em 0',

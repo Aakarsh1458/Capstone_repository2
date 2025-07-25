@@ -9,7 +9,7 @@ function Login() {
   });
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
-  const darkBeige = '#e0d3b8';
+  const darkBeige = '#bfa77a';
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -37,6 +37,7 @@ function Login() {
         minHeight: '100vh',
         minWidth: '100vw',
         background: darkBeige,
+        color: '#222',
         display: 'flex',
         flexDirection: 'column',
         fontFamily: 'Segoe UI, sans-serif',
@@ -154,16 +155,16 @@ function Login() {
           width: '100%',
           maxWidth: '520px',
         }}>
-          <h2 style={{ color: '#6b8a4c', marginBottom: '1.5em' }}>Login</h2>
+          <h2 style={{ color: '#222', marginBottom: '1.5em' }}>Login</h2>
           <input type="email" name="email" placeholder="Email" value={form.email} onChange={handleChange} required style={{ marginBottom: '1em', padding: '0.7em', borderRadius: '8px', border: '1px solid #b7c7a355', width: '100%' }} />
           <input type="password" name="password" placeholder="Password" value={form.password} onChange={handleChange} required style={{ marginBottom: '1em', padding: '0.7em', borderRadius: '8px', border: '1px solid #b7c7a355', width: '100%' }} />
           <motion.button
-            whileHover={{ scale: 1.06, backgroundColor: '#6b8a4c', color: '#fff' }}
+            whileHover={{ scale: 1.06, backgroundColor: '#222', color: '#fff' }}
             whileTap={{ scale: 0.97 }}
             type="submit"
             style={{
-              background: '#e7ecd9',
-              color: '#6b8a4c',
+              background: '#d9c9a3',
+              color: '#222',
               border: 'none',
               borderRadius: '8px',
               padding: '0.7em 1.5em',
@@ -179,7 +180,7 @@ function Login() {
             Login
           </motion.button>
           {error && <p style={{ color: 'red', marginTop: '1em' }}>{error}</p>}
-          {success && <p style={{ color: '#6b8a4c', marginTop: '1em' }}>Login successful!</p>}
+          {success && <p style={{ color: '#222', marginTop: '1em' }}>Login successful!</p>}
         </form>
       </motion.div>
       {/* Footer */}
@@ -188,7 +189,7 @@ function Login() {
         animate={{ opacity: 1 }}
         transition={{ duration: 1, delay: 1.2 }}
         style={{
-          color: '#6b8a4c',
+          color: '#222',
           fontSize: '1rem',
           marginTop: 'auto',
           padding: '1em 0',
