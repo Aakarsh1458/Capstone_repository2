@@ -1,7 +1,12 @@
 
+import React from 'react';
+
 function Tips() {
-  return <h1>tips</h1>;
+  return (
+    <div>
+      <h1>Wellness Tips</h1>
+    </div>
+  );
 }
 
-export default Tips;        
-        
+export default Tips;

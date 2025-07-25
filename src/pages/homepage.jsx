@@ -13,12 +13,12 @@ function Home(){
   { name: 'Register', path: '/register', desc: 'Create a new account' },
   { name: 'Blogs', path: '/blogs', desc: 'Explore mental health blogs' },
   { name: 'FAQs', path: '/faqs', desc: 'Commonly asked questions' },
-  { name: 'About', path: '/about', desc: 'Learn more about us' }, // ✅ Added this line
+  { name: 'About', path: '/about', desc: 'Learn more about us' }, 
 ];
 
 
 
-    // Dynamically import all files in the pages folder (except homepage.jsx)
+    
    
 
     const servicesList = [
@@ -94,16 +94,16 @@ function Home(){
                 }}
             >
                 {/* Logo and Title */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1.2em', minWidth: 0 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1.2em', minWidth: 0, flex: '0 0 auto' }}>
                     {/* LOGO START */}
                     <motion.img
-                        src={'https://eu-central.storage.cloudconvert.com/tasks/e37b43c7-e502-4ac7-9a46-9c837434c5ff/capstone1.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=cloudconvert-production%2F20250724%2Ffra%2Fs3%2Faws4_request&X-Amz-Date=20250724T144002Z&X-Amz-Expires=86400&X-Amz-Signature=1796291d3795536b7ef257308b1a90bf752c8e0cbbcbab16b30dd55e060c826d&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22capstone1.png%22&response-content-type=image%2Fpng&x-id=GetObject'}
-                        alt="Mental Wellness Portal Logo"
+                        src={"C:\Users\aakar\mental-wellness-portal\src\pages\capstone1.jpg"}
+                        alt="M"
                         whileHover={{ scale: 1.06, rotate: 3 }}
                         whileTap={{ scale: 0.97 }}
                         onClick={() => window.location.pathname = '/'}
                         style={{
-                            height: '60px', // Increased size
+                            height: '60px',
                             width: 'auto',
                             borderRadius: '10px',
                             boxShadow: '0 1px 6px #b7c7a322',
@@ -120,120 +120,83 @@ function Home(){
                         style={{
                             fontFamily: "'Nunito', 'Poppins', sans-serif",
                             fontWeight: 700,
-                            fontSize: '2.4rem', // Bigger than rest of page
+                            fontSize: '2.4rem',
                             color: '#c8a97e',
                             letterSpacing: '0.5px',
                             lineHeight: 1.1,
                             whiteSpace: 'nowrap',
                             userSelect: 'none',
-                        }}
-                    >
-                        Mental Wellness Portal
-                    </span>
-                </div>
-                {/* Navigation Bar */}
-                <nav style={{ display: 'flex', alignItems: 'center', gap: '1.5em' }}>
-                    {navPages.map((page) => (
-                        <motion.div
-                            key={page.path}
-                            whileHover={{ scale: 1.06, background: "#b7c7a322" }}
-                            whileTap={{ scale: 0.97 }}
-                            style={{
-                                borderRadius: '7px',
-                                padding: '0.4em 0.9em',
-                                transition: 'background 0.2s',
-                            }}
-                        >
-                            <Link
-                                to={page.path}
-                                style={{
-                                    color: '#6b8a4c',
-                                    textDecoration: 'none',
-                                    fontWeight: 600,
-                                    fontSize: '1.05rem',
-                                }}
-                            >
-                                {page.name}
-                            </Link>
-                        </motion.div>
-                    ))}
-                    {servicesNav.map((item) => (
-                        <motion.div
-                            key={item.path}
-                            whileHover={{ scale: 1.06, background: "#b7c7a322" }}
-                            whileTap={{ scale: 0.97 }}
-                            style={{
-                                borderRadius: '7px',
-                                padding: '0.4em 0.9em',
-                                transition: 'background 0.2s',
-                            }}
-                        >
-                            <Link
-                                to={item.path}
-                                style={{
-                                    color: '#6b8a4c',
-                                    textDecoration: 'none',
-                                    fontWeight: 600,
-                                    fontSize: '1.05rem',
-                                }}
-                            >
-                                {item.name}
-                            </Link>
-                        </motion.div>
-                    ))}
-                    {/* Add another link to Assessment.jsx */}
-                    <motion.div
-                        whileHover={{ scale: 1.06, background: "#b7c7a322" }}
-                        whileTap={{ scale: 0.97 }}
-                        style={{
-                            borderRadius: '7px',
-                            padding: '0.4em 0.9em',
-                            transition: 'background 0.2s',
-                        }}
-                    >
-                        <Link
-                            to="/Assessment"
-                            style={{
-                                color: '#6b8a4c',
-                                textDecoration: 'none',
-                                fontWeight: 600,
-                                fontSize: '1.05rem',
-                            }}
-                        >
-                            Assessment
-                        </Link>
-                    </motion.div>
-                    <div style={{ width: '1.5em' }} />
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.7em' }}>
-                        {loginRegister.map((item) => (
-                            <motion.div
-                                key={item.path}
-                                whileHover={{ scale: 1.08, background: "#b7c7a322" }}
-                                whileTap={{ scale: 0.97 }}
-                                style={{
-                                    borderRadius: '7px',
-                                    padding: '0.4em 0.9em',
-                                    transition: 'background 0.2s',
-                                }}
-                            >
-                                <Link
-                                    to={item.path}
-                                    style={{
-                                        color: '#6b8a4c',
-                                        textDecoration: 'none',
-                                        fontWeight: 700,
-                                        fontSize: '1.05rem',
-                                        letterSpacing: '0.5px',
-                                    }}
-                                >
-                                    {item.name}
-                                </Link>
-                            </motion.div>
-                        ))}
-                    </div>
-                </nav>
-            </motion.div>
-            {/* Main Content: Two-column layout */}
+                            // Add margin to push away from nav
+                                                    }}
+                                                >
+                                                    MindEase
+                                                </span>
+                                            </div>
+                                            {/* Navigation Bar */}
+                                            <nav style={{
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                gap: '1em',
+                                                marginLeft: '2.5em', // Space between title and nav
+                                                flex: '1 1 auto',
+                                                justifyContent: 'flex-start', // Move nav to the left
+                                                flexWrap: 'wrap', // Allow nav items to wrap if needed
+                                            }}>
+                                                {[...navPages, ...servicesNav, { name: 'Assessment', path: '/Assessment' }].map((item) => (
+                                                    <motion.div
+                                                        key={item.path}
+                                                        whileHover={{ scale: 1.06, background: "#b7c7a322" }}
+                                                        whileTap={{ scale: 0.97 }}
+                                                        style={{
+                                                            borderRadius: '7px',
+                                                            padding: '0.2em 0.6em',
+                                                            transition: 'background 0.2s',
+                                                        }}
+                                                    >
+                                                        <Link
+                                                            to={item.path}
+                                                            style={{
+                                                                color: '#6b8a4c',
+                                                                textDecoration: 'none',
+                                                                fontWeight: 600,
+                                                                fontSize: '0.92rem',
+                                                            }}
+                                                        >
+                                                            {item.name}
+                                                        </Link>
+                                                    </motion.div>
+                                                ))}
+                                                <div style={{ width: '1em' }} />
+                                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5em' }}>
+                                                    {loginRegister.map((item) => (
+                                                        <motion.div
+                                                            key={item.path}
+                                                            whileHover={{ scale: 1.08, background: "#b7c7a322" }}
+                                                            whileTap={{ scale: 0.97 }}
+                                                            style={{
+                                                                borderRadius: '7px',
+                                                                padding: '0.2em 0.6em',
+                                                                transition: 'background 0.2s',
+                                                            }}
+                                                        >
+                                                            <Link
+                                                                to={item.path}
+                                                                style={{
+                                                                    color: '#6b8a4c',
+                                                                    textDecoration: 'none',
+                                                                    fontWeight: 700,
+                                                                    fontSize: '0.92rem',
+                                                                    letterSpacing: '0.5px',
+                                                                }}
+                                                            >
+                                                                {item.name}
+                                                            </Link>
+                                                        </motion.div>
+                                                    ))}
+                                                </div>
+                                            </nav>
+                                        </motion.div>
+                                        {/* Main Content: Two-column layout */}
             <motion.div
                 initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -272,19 +235,21 @@ function Home(){
                         top: 0,
                     }}
                 >
-                    {/* Assessment Image */}
-                    <img
-                        src="https://imgs.search.brave.com/4BMz4ui2Jz6oxH3Oq7A2ukfJDeREnpJt7ckw2l5IhBs/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9jZG4u/Y3JlYXRlLnZpc3Rh/LmNvbS9hcGkvbWVk/aWEvc21hbGwvMTA1/MzkzNjQwL3N0b2Nr/LXBob3RvLWh1bWFu/LWhlYWQtc2lsaG91/ZXR0ZS1tZW50YWwt/aGVhbHRoLXN5bWJv/bC1wdXp6bGU"
-                        alt="Assessment Illustration"
-                        style={{
-                            width: '80px',
-                            height: '80px',
-                            objectFit: 'cover',
-                            borderRadius: '12px',
-                            boxShadow: '0 1px 6px #b7c7a222',
-                            background: '#e7ecd9',
-                        }}
-                    />
+                    {/* Assessment Image as Link */}
+                    <Link to="/Assessment" style={{ display: 'inline-block' }}>
+                        <img
+                            src="https://imgs.search.brave.com/4BMz4ui2Jz6oxH3Oq7A2ukfJDeREnpJt7ckw2l5IhBs/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9jZG4u/Y3JlYXRlLnZpc3Rh/LmNvbS9hcGkvbWVk/aWEvc21hbGwvMTA1/MzkzNjQwL3N0b2Nr/LXBob3RvLWh1bWFu/LWhlYWQtc2lsaG91/ZXR0ZS1tZW50YWwt/aGVhbHRoLXN5bWJv/bC1wdXp6bGU"
+                            alt="Assessment Illustration"
+                            style={{
+                                width: '90px',
+                                height: '90px',
+                                objectFit: '',
+                                borderRadius: '12px',
+                                boxShadow: '0 1px 6px #b7c7a222',
+                                background: '#e7ecd9',
+                            }}
+                        />
+                    </Link>
                     {/* Assessment Text and Button */}
                     <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', marginLeft: '1.2em' }}>
                         <span
@@ -315,6 +280,8 @@ function Home(){
                                     transition: 'background 0.2s, color 0.2s',
                                     marginTop: '0.2em',
                                     letterSpacing: '0.5px',
+                                    marginLeft: '67px',
+                                    contentalign: 'center',
                                 }}
                             >
                                 Take Now

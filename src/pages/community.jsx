@@ -1,6 +1,11 @@
-// Home.jsx
+import React from 'react';
+
 function Community() {
-  return <h1>Community</h1>;
+  return (
+    <div>
+      <h1>Community Page</h1>
+    </div>
+  );
 }
 
 export default Community;
