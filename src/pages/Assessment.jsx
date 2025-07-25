@@ -1,29 +1,21 @@
 import React, { useState } from 'react';
-// Uncomment the lines below if you want to add a Lottie animated character
-// import Lottie from 'lottie-react';
-// import relaxAnimation from './animations/relax.json'; // place your JSON file in src/animations/
 
-function Assessment() {
+function SelfAssessment() {
   const [answers, setAnswers] = useState({});
   const [submitted, setSubmitted] = useState(false);
   const [score, setScore] = useState(0);
 
   const questions = [
-    {
-      id: 1,
-      text: 'How often do you feel overwhelmed with studies?',
-      options: ['Rarely', 'Sometimes', 'Often']
-    },
-    {
-      id: 2,
-      text: 'How well are you sleeping lately?',
-      options: ['Very well', 'Okay', 'Poorly']
-    },
-    {
-      id: 3,
-      text: 'Do you feel supported by friends/family?',
-      options: ['Yes', 'Somewhat', 'No']
-    }
+    { id: 1, text: 'How often do you feel overwhelmed with studies?', options: ['Rarely', 'Sometimes', 'Often'] },
+    { id: 2, text: 'How well are you sleeping lately?', options: ['Very well', 'Okay', 'Poorly'] },
+    { id: 3, text: 'Do you feel supported by friends/family?', options: ['Yes', 'Somewhat', 'No'] },
+    { id: 4, text: 'Do you find it hard to focus on tasks?', options: ['Not at all', 'Sometimes', 'Very often'] },
+    { id: 5, text: 'Are you experiencing frequent headaches or fatigue?', options: ['No', 'Occasionally', 'Yes'] },
+    { id: 6, text: 'How often do you take breaks while studying?', options: ['Regularly', 'Sometimes', 'Rarely'] },
+    { id: 7, text: 'Do you engage in physical activity?', options: ['Often', 'Sometimes', 'Never'] },
+    { id: 8, text: 'How is your appetite recently?', options: ['Normal', 'Fluctuating', 'Lost'] },
+    { id: 9, text: 'Do you feel anxious or panicked without clear reason?', options: ['No', 'Sometimes', 'Frequently'] },
+    { id: 10, text: 'Do you feel motivated to achieve your goals?', options: ['Yes', 'Sometimes', 'No'] }
   ];
 
   const handleChange = (qId, value) => {
@@ -43,9 +35,9 @@ function Assessment() {
   };
 
   const getResultMessage = () => {
-    if (score <= 1) return "😊 You're doing well. Keep it up!";
-    if (score <= 3) return "😌 Mild stress detected. Take time to relax.";
-    return "⚠️ High stress. Consider seeking help or speaking to someone.";
+    if (score <= 5) return "😊 You're doing great! Keep caring for yourself.";
+    if (score <= 12) return "😌 Mild stress. Take breaks, sleep well, and stay balanced.";
+    return "⚠️ High stress. Please talk to someone or seek guidance.";
   };
 
   return (
@@ -53,7 +45,7 @@ function Assessment() {
       <style>{`
         .quiz-container {
           font-family: 'Segoe UI', sans-serif;
-          max-width: 600px;
+          max-width: 700px;
           margin: 2rem auto;
           padding: 2rem;
           background-color: #f9faff;
@@ -71,17 +63,11 @@ function Assessment() {
           text-align: center;
           color: #4a90e2;
           margin-bottom: 1.5rem;
-          animation: slideDown 0.8s ease-in;
-        }
-
-        @keyframes slideDown {
-          from { opacity: 0; transform: translateY(-20px); }
-          to   { opacity: 1; transform: translateY(0); }
         }
 
         .question {
           margin-bottom: 2rem;
-          animation: fadeInSection 1s ease forwards;
+          animation: fadeInSection 0.5s ease;
         }
 
         @keyframes fadeInSection {
@@ -132,34 +118,23 @@ function Assessment() {
           background: #e0f7fa;
           border-left: 5px solid #00acc1;
           border-radius: 6px;
-          animation: bounceIn 0.8s ease;
+          animation: popIn 0.6s ease;
         }
 
-        @keyframes bounceIn {
-          0%   { transform: scale(0.8); opacity: 0; }
-          60%  { transform: scale(1.05); opacity: 1; }
-          100% { transform: scale(1); }
-        }
-
-        .character {
-          width: 160px;
-          margin: 0 auto 1rem;
+        @keyframes popIn {
+          from { transform: scale(0.95); opacity: 0; }
+          to   { transform: scale(1); opacity: 1; }
         }
       `}</style>
 
       <div className="quiz-container">
-        {/* Uncomment to show animated character using Lottie */}
-        {/* <div className="character">
-          <Lottie animationData={relaxAnimation} loop={true} />
-        </div> */}
-
         <h1>🧘 Stress Self-Assessment</h1>
 
         {!submitted ? (
           <form onSubmit={handleSubmit}>
             {questions.map((q, idx) => (
-              <div className="question" key={q.id} style={{ animationDelay: `${idx * 0.2}s` }}>
-                <p>{q.text}</p>
+              <div className="question" key={q.id}>
+                <p>{`${q.id}. ${q.text}`}</p>
                 {q.options.map((opt) => (
                   <label key={opt}>
                     <input
@@ -186,5 +161,4 @@ function Assessment() {
   );
 }
 
-export default Assessment;
-
+export default SelfAssessment;
