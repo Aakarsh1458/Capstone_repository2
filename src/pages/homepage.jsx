@@ -8,6 +8,7 @@ function Home() {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [isHovered, setIsHovered] = useState(null);
   const { user } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -86,6 +87,7 @@ function Home() {
 
       {/* Header */}
       <Header />
+     
 
       {/* Hero Section */}
       <section className="relative z-10 max-w-7xl mx-auto px-6 py-20 text-center">
@@ -151,7 +153,7 @@ function Home() {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, delay: 0.4 }}
-            className="text-center"
+            className="col-span-2 md:col-span-4 flex flex-col items-center justify-center text-center"
           >
             <div className="text-3xl md:text-4xl font-bold text-white mb-2">
               {currentTime.toLocaleTimeString()}
@@ -202,6 +204,8 @@ function Home() {
             </motion.div>
           ))}
         </motion.div>
+
+        
       </section>
 
       {/* Interactive Demo Section */}

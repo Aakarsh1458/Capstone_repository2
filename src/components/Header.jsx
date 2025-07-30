@@ -42,23 +42,19 @@ function Header() {
           <motion.div 
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="hidden md:flex items-center space-x-8"
+            className="hidden md:flex items-center gap-8"
           >
             <Link to="/about" className="text-white/80 hover:text-white transition-colors">About</Link>
             <Link to="/contact" className="text-white/80 hover:text-white transition-colors">Contact</Link>
-            <div className="relative" onMouseEnter={() => setServicesOpen(true)} onMouseLeave={() => setServicesOpen(false)}>
-              <button className="text-white/80 hover:text-white transition-colors flex items-center space-x-1">
-                <span>Services</span>
-                <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
-              </button>
-              {servicesOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-slate-800 border border-white/10 rounded-xl shadow-lg z-20">
-                  <Link to="/assessment" className="block px-4 py-3 text-white/80 hover:bg-blue-500/20 hover:text-white transition-colors">Assessment</Link>
-                  <Link to="/resources" className="block px-4 py-3 text-white/80 hover:bg-blue-500/20 hover:text-white transition-colors">Resources</Link>
-                  <Link to="/tips" className="block px-4 py-3 text-white/80 hover:bg-blue-500/20 hover:text-white transition-colors">Exercises</Link>
-                </div>
-              )}
-            </div>
+            <nav className="flex items-center gap-8 px-6 py-4">
+              <Link
+                to="/assessment"
+                className="text-white/60 hover:text-white font-semibold transition-colors"
+                style={{ userSelect: 'none' }}
+              >
+                Assessment
+              </Link>
+            </nav>
             {user ? (
               <div className="flex-1 flex justify-center">
                 <span className="text-white/80 text-lg font-semibold text-center block">Welcome, {getFirstName(user.username)}!</span>
@@ -84,4 +80,4 @@ function Header() {
   );
 }
 
-export default Header; 
+export default Header;
