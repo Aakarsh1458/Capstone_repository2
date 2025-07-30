@@ -1,214 +1,355 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import Header from '../components/Header';
 
 function Register() {
-  const [form, setForm] = useState({
-    username: '',
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
     email: '',
     password: '',
-    profilePic: '',
+    confirmPassword: '',
     age: '',
     gender: '',
-    bio: '',
+    bio: ''
   });
-  const [submitted, setSubmitted] = useState(false);
-  const darkBeige = '#bfa77a';
+  const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [error, setError] = useState('');
+  const { register } = useAuth();
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+    setError(''); // Clear error when user types
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
-    // Here you would send data to backend
-    localStorage.setItem('userDetails', JSON.stringify(form));
+    setIsLoading(true);
+    setError('');
+
+    // Validate passwords match
+    if (formData.password !== formData.confirmPassword) {
+      setError('Passwords do not match');
+      setIsLoading(false);
+      return;
+    }
+
+    // Validate password length
+    if (formData.password.length < 6) {
+      setError('Password must be at least 6 characters long');
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+      const userData = {
+        username: `${formData.firstName}${formData.lastName}`.toLowerCase(),
+        email: formData.email,
+        password: formData.password,
+        age: parseInt(formData.age) || null,
+        gender: formData.gender || null,
+        bio: formData.bio || ''
+      };
+
+      const result = await register(userData);
+      if (result.success) {
+        navigate('/');
+      } else {
+        setError(result.error);
+      }
+    } catch (error) {
+      setError('An unexpected error occurred. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.5
+      }
+    }
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 1.2, ease: 'anticipate' }}
-      style={{
-        minHeight: '100vh',
-        minWidth: '100vw',
-        background: darkBeige,
-        color: '#222',
-        display: 'flex',
-        flexDirection: 'column',
-        fontFamily: 'Segoe UI, sans-serif',
-        margin: 0,
-        boxSizing: 'border-box',
-        overflow: 'hidden',
-        padding: 0,
-        backgroundImage: 'url("/path/to/your/background-image.jpg")',
-        backgroundRepeat: 'no-repeat',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-      }}
-    >
-      {/* Navigation Bar (copied from homepage) */}
-      <motion.div
-        initial={{ y: -80, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ type: 'spring', stiffness: 80, damping: 12 }}
-        style={{
-          width: '100vw',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          padding: '0.7em 2em',
-          background: darkBeige,
-          boxShadow: '0 1px 8px #b7c7a322',
-          borderBottom: '1px solid #b7c7a355',
-          position: 'relative',
-          zIndex: 10,
-          margin: 0,
-        }}
-      >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1.2em', minWidth: 0, flex: '0 0 auto' }}>
-          <motion.img
-            src={'C:/Users/aakar/mental-wellness-portal/src/pages/capstone1.jpg'}
-            alt="M"
-            whileHover={{ scale: 1.06, rotate: 3 }}
-            whileTap={{ scale: 0.97 }}
-            onClick={() => window.location.pathname = '/'}
-            style={{
-              height: '60px',
-              width: 'auto',
-              borderRadius: '10px',
-              boxShadow: '0 1px 6px #b7c7a322',
-              cursor: 'pointer',
-              background: 'transparent',
-              transition: 'box-shadow 0.2s',
-              marginRight: '0.7em',
-            }}
-          />
-          <span
-            className="logo-text"
-            style={{
-              fontFamily: "'Nunito', 'Poppins', sans-serif",
-              fontWeight: 700,
-              fontSize: '2.4rem',
-              color: '#c8a97e',
-              letterSpacing: '0.5px',
-              lineHeight: 1.1,
-              whiteSpace: 'nowrap',
-              userSelect: 'none',
-            }}
-          >
-            MindEase
-          </span>
-        </div>
-        <nav style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '1em',
-          marginLeft: '2.5em',
-          flex: '1 1 auto',
-          justifyContent: 'flex-start',
-          flexWrap: 'wrap',
-        }}>
-          <Link to="/" style={{ color: '#6b8a4c', textDecoration: 'none', fontWeight: 600, fontSize: '0.92rem', marginRight: '1em' }}>Home</Link>
-          <Link to="/about" style={{ color: '#6b8a4c', textDecoration: 'none', fontWeight: 600, fontSize: '0.92rem', marginRight: '1em' }}>About</Link>
-          <Link to="/blogs" style={{ color: '#6b8a4c', textDecoration: 'none', fontWeight: 600, fontSize: '0.92rem', marginRight: '1em' }}>Blogs</Link>
-          <Link to="/faqs" style={{ color: '#6b8a4c', textDecoration: 'none', fontWeight: 600, fontSize: '0.92rem', marginRight: '1em' }}>FAQs</Link>
-          <Link to="/assessment" style={{ color: '#6b8a4c', textDecoration: 'none', fontWeight: 600, fontSize: '0.92rem', marginRight: '1em' }}>Assessment</Link>
-          <Link to="/community" style={{ color: '#6b8a4c', textDecoration: 'none', fontWeight: 600, fontSize: '0.92rem', marginRight: '1em' }}>Community</Link>
-          <Link to="/tips" style={{ color: '#6b8a4c', textDecoration: 'none', fontWeight: 600, fontSize: '0.92rem', marginRight: '1em' }}>Tips</Link>
-          <Link to="/resources" style={{ color: '#6b8a4c', textDecoration: 'none', fontWeight: 600, fontSize: '0.92rem', marginRight: '1em' }}>Resources</Link>
-          <Link to="/login" style={{ color: '#6b8a4c', textDecoration: 'none', fontWeight: 700, fontSize: '0.92rem', letterSpacing: '0.5px', marginRight: '1em' }}>Login</Link>
-          <Link to="/register" style={{ color: '#6b8a4c', textDecoration: 'none', fontWeight: 700, fontSize: '0.92rem', letterSpacing: '0.5px' }}>Register</Link>
-        </nav>
-      </motion.div>
-      {/* Register Form Section */}
-      <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, delay: 0.3, type: 'spring', stiffness: 60 }}
-        style={{
-          display: 'flex',
-          flex: 1,
-          width: '100%',
-          maxWidth: '600px',
-          margin: '4em auto 0 auto',
-          alignItems: 'flex-start',
-          justifyContent: 'center',
-          position: 'relative',
-          minHeight: '420px',
-          gap: '2.5em',
-        }}
-      >
-        <form onSubmit={handleSubmit} style={{
-          background: '#fff',
-          borderRadius: '18px',
-          boxShadow: '0 2px 16px #b7c7a322',
-          padding: '2.5em 2.5em',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          minWidth: '320px',
-          width: '100%',
-          maxWidth: '520px',
-        }}>
-          <h2 style={{ color: '#222', marginBottom: '1.5em' }}>Register</h2>
-          <input type="text" name="username" placeholder="Username" value={form.username} onChange={handleChange} required style={{ marginBottom: '1em', padding: '0.7em', borderRadius: '8px', border: '1px solid #b7c7a355', width: '100%' }} />
-          <input type="email" name="email" placeholder="Email" value={form.email} onChange={handleChange} required style={{ marginBottom: '1em', padding: '0.7em', borderRadius: '8px', border: '1px solid #b7c7a355', width: '100%' }} />
-          <input type="password" name="password" placeholder="Password" value={form.password} onChange={handleChange} required style={{ marginBottom: '1em', padding: '0.7em', borderRadius: '8px', border: '1px solid #b7c7a355', width: '100%' }} />
-          <input type="text" name="profilePic" placeholder="Profile Picture URL" value={form.profilePic} onChange={handleChange} style={{ marginBottom: '1em', padding: '0.7em', borderRadius: '8px', border: '1px solid #b7c7a355', width: '100%' }} />
-          <input type="number" name="age" placeholder="Age" value={form.age} onChange={handleChange} style={{ marginBottom: '1em', padding: '0.7em', borderRadius: '8px', border: '1px solid #b7c7a355', width: '100%' }} />
-          <select name="gender" value={form.gender} onChange={handleChange} style={{ marginBottom: '1em', padding: '0.7em', borderRadius: '8px', border: '1px solid #b7c7a355', width: '100%' }}>
-            <option value="">Select Gender</option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-            <option value="Other">Other</option>
-          </select>
-          <textarea name="bio" placeholder="Bio" value={form.bio} onChange={handleChange} style={{ marginBottom: '1em', padding: '0.7em', borderRadius: '8px', border: '1px solid #b7c7a355', width: '100%' }} />
-          <motion.button
-            whileHover={{ scale: 1.06, backgroundColor: '#222', color: '#fff' }}
-            whileTap={{ scale: 0.97 }}
-            type="submit"
-            style={{
-              background: '#d9c9a3',
-              color: '#222',
-              border: 'none',
-              borderRadius: '8px',
-              padding: '0.7em 1.5em',
-              fontWeight: 700,
-              fontSize: '1.08rem',
-              boxShadow: '0 1px 6px #b7c7a222',
-              cursor: 'pointer',
-              transition: 'background 0.2s, color 0.2s',
-              marginTop: '0.2em',
-              letterSpacing: '0.5px',
-            }}
-          >
-            Register
-          </motion.button>
-          {submitted && <p style={{ color: '#222', marginTop: '1em' }}>Registration successful!</p>}
-        </form>
-      </motion.div>
-      {/* Footer */}
-      <motion.footer
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 1.2 }}
-        style={{
-          color: '#222',
-          fontSize: '1rem',
-          marginTop: 'auto',
-          padding: '1em 0',
-          width: '100vw',
-          background: darkBeige,
-          textAlign: 'center',
-          borderTop: '1px solid #b7c7a355',
-        }}
-      >
-        &copy; {new Date().getFullYear()} Mental Wellness Portal. All rights reserved.
-      </motion.footer>
-    </motion.div>
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+      {/* Header */}
+      <Header />
+
+      <div className="flex items-center justify-center py-20">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="max-w-2xl w-full mx-auto px-6"
+        >
+          {/* Header */}
+          <motion.div variants={itemVariants} className="text-center mb-8">
+            <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-500 rounded-2xl flex items-center justify-center text-white font-bold text-2xl mx-auto mb-4">
+              M
+            </div>
+            <h1 className="text-3xl font-bold text-white mb-2">
+              Join MindEase
+            </h1>
+            <p className="text-white/60">
+              Start your MindEase journey today
+            </p>
+          </motion.div>
+
+          {/* Registration Form */}
+          <motion.div variants={itemVariants}>
+            <div className="bg-white/5 backdrop-blur-md border border-white/10 p-8 rounded-3xl">
+              {error && (
+                <div className="mb-4 p-3 bg-red-500/20 border border-red-500/50 rounded-lg text-red-300 text-sm">
+                  {error}
+                </div>
+              )}
+              
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label htmlFor="firstName" className="block text-sm font-semibold text-white/80 mb-2">
+                      First Name
+                    </label>
+                    <input
+                      type="text"
+                      id="firstName"
+                      name="firstName"
+                      value={formData.firstName}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/40 focus:outline-none focus:border-blue-500 transition-colors"
+                      placeholder="Enter your first name"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label htmlFor="lastName" className="block text-sm font-semibold text-white/80 mb-2">
+                      Last Name
+                    </label>
+                    <input
+                      type="text"
+                      id="lastName"
+                      name="lastName"
+                      value={formData.lastName}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/40 focus:outline-none focus:border-blue-500 transition-colors"
+                      placeholder="Enter your last name"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label htmlFor="email" className="block text-sm font-semibold text-white/80 mb-2">
+                    Email Address
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/40 focus:outline-none focus:border-blue-500 transition-colors"
+                    placeholder="Enter your email"
+                  />
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label htmlFor="password" className="block text-sm font-semibold text-white/80 mb-2">
+                      Password
+                    </label>
+                    <div className="relative">
+                      <input
+                        type={showPassword ? "text" : "password"}
+                        id="password"
+                        name="password"
+                        value={formData.password}
+                        onChange={handleChange}
+                        required
+                        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/40 focus:outline-none focus:border-blue-500 transition-colors pr-12"
+                        placeholder="Create a password"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/60 hover:text-white transition-colors"
+                      >
+                        {showPassword ? "🙈" : "👁️"}
+                      </button>
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <label htmlFor="confirmPassword" className="block text-sm font-semibold text-white/80 mb-2">
+                      Confirm Password
+                    </label>
+                    <div className="relative">
+                      <input
+                        type={showConfirmPassword ? "text" : "password"}
+                        id="confirmPassword"
+                        name="confirmPassword"
+                        value={formData.confirmPassword}
+                        onChange={handleChange}
+                        required
+                        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/40 focus:outline-none focus:border-blue-500 transition-colors pr-12"
+                        placeholder="Confirm your password"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/60 hover:text-white transition-colors"
+                      >
+                        {showConfirmPassword ? "🙈" : "👁️"}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label htmlFor="age" className="block text-sm font-semibold text-white/80 mb-2">
+                      Age (Optional)
+                    </label>
+                    <input
+                      type="number"
+                      id="age"
+                      name="age"
+                      value={formData.age}
+                      onChange={handleChange}
+                      min="13"
+                      max="120"
+                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/40 focus:outline-none focus:border-blue-500 transition-colors"
+                      placeholder="Enter your age"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label htmlFor="gender" className="block text-sm font-semibold text-white/80 mb-2">
+                      Gender (Optional)
+                    </label>
+                    <select
+                      id="gender"
+                      name="gender"
+                      value={formData.gender}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:border-blue-500 transition-colors"
+                    >
+                      <option value="">Select gender</option>
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                      <option value="Non-binary">Non-binary</option>
+                      <option value="Other">Other</option>
+                      <option value="Prefer not to say">Prefer not to say</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label htmlFor="bio" className="block text-sm font-semibold text-white/80 mb-2">
+                    Bio (Optional)
+                  </label>
+                  <textarea
+                    id="bio"
+                    name="bio"
+                    value={formData.bio}
+                    onChange={handleChange}
+                    rows="3"
+                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/40 focus:outline-none focus:border-blue-500 transition-colors resize-none"
+                    placeholder="Tell us a bit about yourself..."
+                  />
+                </div>
+
+                <div className="flex items-center">
+                  <input
+                    type="checkbox"
+                    required
+                    className="mr-2 rounded border-white/20 bg-white/5 text-blue-500 focus:ring-blue-500 focus:ring-offset-0"
+                  />
+                  <span className="text-sm text-white/60">
+                    I agree to the{' '}
+                    <a href="#" className="text-blue-400 hover:text-blue-300 transition-colors">
+                      Terms of Service
+                    </a>
+                    {' '}and{' '}
+                    <a href="#" className="text-blue-400 hover:text-blue-300 transition-colors">
+                      Privacy Policy
+                    </a>
+                  </span>
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  className="w-full bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                >
+                  {isLoading ? (
+                    <div className="flex items-center justify-center">
+                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                      Creating account...
+                    </div>
+                  ) : (
+                    'Create Account'
+                  )}
+                </button>
+              </form>
+
+              <div className="mt-8 text-center">
+                <p className="text-white/60">
+                  Already have an account?{' '}
+                  <Link to="/login" className="text-blue-400 hover:text-blue-300 transition-colors font-semibold">
+                    Sign in
+                  </Link>
+                </p>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Benefits Section */}
+          <motion.div variants={itemVariants} className="mt-8 text-center">
+            <h3 className="text-lg font-semibold text-white mb-4">Why Join MindEase?</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
+              <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-4">
+                <div className="text-2xl mb-2">🧠</div>
+                <div className="text-white/80">AI-powered assessments</div>
+              </div>
+              <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-4">
+                <div className="text-2xl mb-2">👥</div>
+                <div className="text-white/80">Supportive community</div>
+              </div>
+              <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-4">
+                <div className="text-2xl mb-2">📈</div>
+                <div className="text-white/80">Track your progress</div>
+              </div>
+            </div>
+          </motion.div>
+        </motion.div>
+      </div>
+    </div>
   );
 }
 

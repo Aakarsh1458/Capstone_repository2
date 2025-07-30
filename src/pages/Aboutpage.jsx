@@ -1,128 +1,139 @@
 import React from 'react';
+import { motion } from 'framer-motion';
+import Header from '../components/Header';
 
-function Aboutpage() {
-return (
-    <div>
-        <style>{`
-            .about-container {
-                font-family: 'Segoe UI', sans-serif;
-                padding: 2rem;
-                background: #f5faff;
-                color: #333;
-            }
+function About() {
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
 
-            .about-header {
-                text-align: center;
-                background: linear-gradient(135deg, #89f7fe, #66a6ff);
-                color: white;
-                padding: 3rem 1rem;
-                border-radius: 10px;
-                margin-bottom: 2rem;
-            }
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.5
+      }
+    }
+  };
 
-            .about-header h1 {
-                margin-bottom: 1rem;
-                font-size: 2.5rem;
-            }
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+      {/* Header */}
+      <Header />
 
-            .about-section {
-                margin-bottom: 2rem;
-                background: #ffffff;
-                padding: 1.5rem;
-                border-radius: 10px;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            }
+      <div className="max-w-7xl mx-auto px-6 py-20">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          {/* Hero Section */}
+          <motion.div variants={itemVariants} className="text-center mb-20">
+            <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">
+              About <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">MindEase</span>
+            </h1>
+            <p className="text-xl text-white/80 max-w-3xl mx-auto">
+              We're dedicated to revolutionizing MindEase through innovative technology and compassionate care.
+            </p>
+          </motion.div>
 
-            .about-section h2 {
-                color: #444;
-                margin-bottom: 0.8rem;
-            }
-
-            .about-section ul {
-                list-style: disc inside;
-            }
-
-            .highlight {
-                color: #66a6ff;
-                font-weight: bold;
-            }
-
-            .about-section a {
-                color: #66a6ff;
-                text-decoration: underline;
-            }
-        `}</style>
-
-        <div className="about-container">
-            <div className="about-header">
-                <h1>About the Mental Wellness Portal</h1>
-                <p>Empowering students through tools, resources, and emotional support</p>
+          {/* Mission Section */}
+          <motion.div variants={itemVariants} className="mb-20">
+            <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl p-8 md:p-12">
+              <h2 className="text-3xl font-bold text-white mb-6">Our Mission</h2>
+              <p className="text-white/80 text-lg leading-relaxed mb-6">
+                MindEase was created with a simple yet powerful mission: to make MindEase accessible, 
+                personalized, and effective for everyone. We believe that mental health is just as important as 
+                physical health, and everyone deserves access to the tools and support they need to thrive.
+              </p>
+              <p className="text-white/80 text-lg leading-relaxed">
+                Through our AI-powered assessments, supportive community, and evidence-based resources, 
+                we're building a future where MindEase is prioritized, understood, and achievable for all.
+              </p>
             </div>
+          </motion.div>
 
-            <div className="about-section">
-                <h2>🌱 Our Mission</h2>
-                <p>
-                    To promote mental wellness among students by providing interactive, accessible, and engaging support through modern technology.
+          {/* Values Section */}
+          <motion.div variants={itemVariants} className="mb-20">
+            <h2 className="text-3xl font-bold text-white mb-12 text-center">Our Values</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-6 text-center">
+                <div className="text-4xl mb-4">🤝</div>
+                <h3 className="text-xl font-semibold text-white mb-3">Compassion</h3>
+                <p className="text-white/70">
+                  We approach mental health with empathy, understanding, and genuine care for every individual's journey.
                 </p>
-            </div>
-
-            <div className="about-section">
-                <h2>🔍 What's Inside?</h2>
-                <ul>
-                    <li>
-                        <span className="highlight">
-                            <a href="/stress-check-quiz">Stress Check Quiz</a>
-                        </span>: Helps students self-evaluate stress levels.
-                    </li>
-                    <li>
-                        <span className="highlight">
-                            <a href="/breathing-timer">Breathing Timer</a>
-                        </span>: A calming guide using React Hooks.
-                    </li>
-                    <li>
-                        <span className="highlight">
-                            <a href="/wellness-tips-cards">Wellness Tips Cards</a>
-                        </span>: Actionable daily mental health tips.
-                    </li>
-                    <li>
-                        <span className="highlight">
-                            <a href="/resources-links">Resources & Links</a>
-                        </span>: Curated helplines, articles, and videos.
-                    </li>
-                    <li>
-                        <span className="highlight">
-                            <a href="/feedback-form">Feedback Form</a>
-                        </span>: Collects suggestions from users.
-                    </li>
-                    <li>
-                        <span className="highlight">
-                            <a href="/login-registration">Login & Registration</a>
-                        </span>: Stores credentials locally (simulated).
-                    </li>
-                    <li>
-                        <span className="highlight">
-                            <a href="/multimedia-embeds">Multimedia Embeds</a>
-                        </span>: Visual content to enrich the experience.
-                    </li>
-                </ul>
-            </div>
-
-            <div className="about-section">
-                <h2>🛠 Technologies Used</h2>
-                <p>
-                    React, JavaScript, HTML, CSS, React Hooks, React Router DOM, LocalStorage, FontAwesome, and responsive design with Flexbox and Media Queries.
+              </div>
+              <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-6 text-center">
+                <div className="text-4xl mb-4">🔬</div>
+                <h3 className="text-xl font-semibold text-white mb-3">Evidence-Based</h3>
+                <p className="text-white/70">
+                  Our approach is grounded in scientific research and proven methodologies for MindEase.
                 </p>
-            </div>
-
-            <div className="about-section">
-                <h2>🌐 Hosting & Documentation</h2>
-                <p>
-                    The site is hosted on GitHub Pages or Netlify, with documentation created using Markdown and final presentation slides via Canva or Google Slides.
+              </div>
+              <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-6 text-center">
+                <div className="text-4xl mb-4">🔒</div>
+                <h3 className="text-xl font-semibold text-white mb-3">Privacy</h3>
+                <p className="text-white/70">
+                  Your mental health journey is personal, and we're committed to protecting your privacy and data.
                 </p>
+              </div>
             </div>
-        </div>
+          </motion.div>
+
+          {/* Technology Section */}
+          <motion.div variants={itemVariants} className="mb-20">
+            <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl p-8 md:p-12">
+              <h2 className="text-3xl font-bold text-white mb-6">Our Technology</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                  <h3 className="text-xl font-semibold text-white mb-4">AI-Powered Assessments</h3>
+                  <p className="text-white/80 leading-relaxed">
+                    Our advanced AI algorithms provide personalized MindEase evaluations, 
+                    offering insights and recommendations tailored to your unique needs and circumstances.
+                  </p>
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold text-white mb-4">Community Support</h3>
+                  <p className="text-white/80 leading-relaxed">
+                    Connect with others on similar wellness journeys in a safe, supportive environment 
+                    where you can share experiences and find encouragement.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* CTA Section */}
+          <motion.div variants={itemVariants} className="text-center">
+            <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl p-8 md:p-12">
+              <h2 className="text-3xl font-bold text-white mb-6">Join Our Mission</h2>
+              <p className="text-white/80 text-lg mb-8 max-w-2xl mx-auto">
+                Ready to take the first step towards better MindEase? 
+                Start your journey with MindEase today.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="/assessment" className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105">
+                  Start Assessment
+                </a>
+                <a href="/register" className="border-2 border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105">
+                  Get Started
+                </a>
+              </div>
+            </div>
+          </motion.div>
+        </motion.div>
+      </div>
     </div>
-);
+  );
 }
 
-export default Aboutpage;
+export default About;
